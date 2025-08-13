@@ -1,0 +1,59 @@
+/* Базовая карточка-квадрат */
+.gi-product-card {
+  aspect-ratio: 5 / 3;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  border-radius: 14px;
+  text-decoration: none;
+  background: linear-gradient(135deg, #0b6496 0%, #0b6496 50%, #0b6496 100%);
+  color: #f7f7f7;
+  box-shadow: 0 8px 18px rgba(0,0,0,.15);
+  transition: transform .18s ease, box-shadow .18s ease, background .2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.gi-product-card:hover { 
+  transform: translateY(-4px);
+  box-shadow: 0 12px 26px rgba(0,0,0,.25);
+}
+
+.gi-product-card:focus-visible {
+  outline: 3px solid #4CAF50;
+  outline-offset: 3px;
+}
+
+/* Лёгкий блик при ховере */
+.gi-product-card::after {
+  content: "";
+  position: absolute;
+  inset: -35%;
+  background: radial-gradient(60% 60% at 70% 30%, rgba(76,175,80,.35), transparent 60%);
+  opacity: 0;
+  transition: opacity .25s ease;
+  pointer-events: none;
+}
+.gi-product-card:hover::after { opacity: 1; }
+
+/* Вариант «только текст» */
+.gi-product-card--text .gi-product-card__text {
+  padding: 0 10%;
+  text-align: center;
+  font-weight: 700;
+  font-size: clamp(1rem, 2.4vw, 1.15rem);
+  line-height: 1.25;
+  color: #e9ecef;
+  /* обрезаем длинные названия до 3 строк */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+/* Фолбэк для старых браузеров без aspect-ratio */
+@supports not (aspect-ratio: 1 / 1) {
+  .gi-product-card { position: relative; }
+  .gi-product-card::before { content: ""; display: block; padding-top: 100%; }
+  .gi-product-card > * { position: absolute; inset: 0; display: grid; place-items: center; }
+}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{{ subcategory.name }} — {{ product.name }}{% endblock %}
+
+{% block content %}
+  <h1 class="mb-4">{{ subcategory.name }}</h1>
+
+  <div class="list-group">
+    {% for qa in qas %}
+      <a class="list-group-item list-group-item-action"
+         href="{% url 'guide:qa_detail' product_slug=product.slug sub_slug=subcategory.slug qa_id=qa.pk %}">
+        {{ qa.question }}
+      </a>
+    {% empty %}
+      <div class="alert alert-info">Вопросов в этой подкатегории пока нет.</div>
+    {% endfor %}
+  </div>
+{% endblock %}

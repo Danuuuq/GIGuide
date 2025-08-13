@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}{{ qa.question }} — {{ subcategory.name }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4" style="min-height: 100vh;">
+  <div class="row h-100">
+    <!-- Левая колонка -->
+    <div class="col-lg-4 col-md-5 d-flex flex-column" style="background-color: #f8f9fa;">
+      <aside class="flex-grow-1 overflow-auto p-3">
+        <h5 class="mb-3">Все вопросы в «{{ subcategory.name }}»</h5>
+        <ul class="list-group list-group-flush">
+          {% for item in subcategory.qa_items.all %}
+            <li class="list-group-item p-2 {% if item.id == qa.id %}active{% endif %}">
+              <a href="{% url 'guide:qa_detail' product_slug=product.slug sub_slug=subcategory.slug qa_id=item.id %}" 
+                 class="{% if item.id == qa.id %}text-white{% else %}text-dark{% endif %} text-decoration-none">
+                {{ item.question }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </aside>
+    </div>
+
+    <!-- Правая колонка -->
+    <div class="col-lg-8 col-md-7 d-flex flex-column">
+      <header class="mb-4">
+        <h1 class="h4">{{ qa.question }}</h1>
+        <div class="text-muted small mb-3">
+          Продукт: {{ product.name }} / Подкатегория: {{ subcategory.name }}
+        </div>
+      </header>
+
+      <article class="flex-grow-1 overflow-auto">
+        {% for block in blocks %}
+          {% include "partials/_qablock.html" with block=block %}
+        {% empty %}
+          <div class="alert alert-info">Для этого вопроса нет контента.</div>
+        {% endfor %}
+      </article>
+    </div>
+  </div>
+</div>
+{% endblock %}

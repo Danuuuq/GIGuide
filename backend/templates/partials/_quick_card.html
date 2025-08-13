@@ -1,0 +1,22 @@
+<div class="card h-100 shadow-sm border-0 gi-quick-card">
+  <div class="card-header text-white py-2 gi-quick-card__header">
+    <a href="{{ card.product_url }}" class="text-white text-decoration-none">
+      <span class="fw-semibold">{{ card.product_name }}</span>
+    </a>
+  </div>
+  <div class="card-body py-3">
+    {% if card.items %}
+      <ul class="list-unstyled mb-0 gi-quick-card__list">
+        {% for q in card.items %}
+          <li class="mb-2">
+            <a href="{{ q.url }}" class="link-dark text-decoration-none gi-quick-card__link">
+              {{ q.title }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <div class="text-muted small">Пока нет вопросов.</div>
+    {% endif %}
+  </div>
+</div>

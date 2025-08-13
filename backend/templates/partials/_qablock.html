@@ -1,0 +1,30 @@
+{% load md %}
+
+{% if block.kind == 'heading' %}
+  <h{{ block.heading_level }} id="{{ block.heading_anchor }}">{{ block.heading_text }}</h{{ block.heading_level }}>
+
+{% elif block.kind == 'text' %}
+  <div class="mb-3 markdown-body">
+    {{ block.text_md|markdown_safe }}
+  </div>
+
+{% elif block.kind in 'image gif' %}
+  <figure class="mb-3">
+    {% if block.media_link %}
+      <img src="{{ block.media_link }}" alt="{{ block.alt_text }}" class="img-fluid">
+    {% endif %}
+    {% if block.caption %}
+      <figcaption class="text-muted small">{{ block.caption }}</figcaption>
+    {% endif %}
+  </figure>
+
+{% elif block.kind == 'video' %}
+  {% if block.media_link %}
+    <div class="ratio ratio-16x9 mb-3">
+      <video controls>
+        <source src="{{ block.media_link }}">
+        Ваш браузер не поддерживает видео.
+      </video>
+    </div>
+  {% endif %}
+{% endif %}

@@ -1,0 +1,39 @@
+:root{
+  --gi-blue: #0b6496;
+}
+
+.gi-quick-card__header{
+  background-color: var(--gi-blue) !important;
+  border-bottom: none;
+}
+/* Горизонтальная лента карточек */
+.gi-hscroll{
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: clamp(260px, 26vw, 340px); /* ширина карточки */
+  gap: 1rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  padding-bottom: .5rem;
+  -webkit-overflow-scrolling: touch;
+}
+.gi-hscroll__item{
+  scroll-snap-align: start;
+}
+
+.gi-hscroll::-webkit-scrollbar{
+  height: 8px;
+}
+.gi-hscroll::-webkit-scrollbar-thumb{
+  background: rgba(0,0,0,.15);
+  border-radius: 4px;
+}
+.gi-hscroll{
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,.15) transparent;
+}
+
+/* Карточки внутри ленты */
+.gi-quick-card .card-header{ padding:.5rem .75rem; }
+.gi-quick-card .card-body{ padding:.75rem; }

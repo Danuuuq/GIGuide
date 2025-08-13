@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}{{ product.name }} — Портал ИТ Газпром Инвест{% endblock %}
+
+{% block content %}
+  <!-- Заголовок страницы -->
+  <header class="mb-3 mb-md-4">
+    <h1 class="h4 m-0">{{ product.name }}</h1>
+    <div class="text-muted small">Подкатегории</div>
+  </header>
+
+  <section class="gi-subcategories mb-4 mb-md-5">
+    <div class="row g-4 justify-content-center">
+      {% for sub in subcategories %}
+        <div class="col-6 col-md-4 col-lg-3 col-xxl-2 gi-product-card-wrap">
+          {% include "partials/_subcategory_card.html" with s=sub p=product %}
+        </div>
+      {% empty %}
+        <div class="col-12">
+          <div class="alert alert-info">Подкатегорий пока нет.</div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  {% if quick_faqs %}
+    <section class="gi-quick mt-4 mt-md-5">
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <h2 class="h5 m-0">Быстрые вопросы по продукту</h2>
+        </div>
+      </div>
+
+      <div class="gi-hscroll" id="quick-scroll">
+        {% for group in quick_faqs %}
+          <div class="gi-hscroll__item">
+            {% include "partials/_quick_card.html" with card=group %}
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+{% endblock %}
+

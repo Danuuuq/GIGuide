@@ -1,0 +1,7 @@
+:root { --gi-blue: #0b6496; }
+.gi-topbar { background: var(--gi-blue); }
+.gi-topbar .navbar-brand, .gi-topbar .nav-link { color: #fff; }
+.gi-topbar .nav-link:hover { color: #fff; text-decoration: underline; }
+
+/* Поиск в шапке: не растягиваем бесконечно */
+.gi-search-nav { max-width: 780px; }

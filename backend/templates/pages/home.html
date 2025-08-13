@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Главная — Портал ИТ Газпром Инвест{% endblock %}
+
+{% block content %}
+
+  <section class="gi-products mb-4 mb-md-5">
+    <div class="row g-4 justify-content-center">
+      {% for p in products %}
+        <div class="col-6 col-md-4 col-lg-3 col-xxl-2 gi-product-card-wrap">
+          {% include "partials/_product_card.html" with p=p %}
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  {% if quick_faqs %}
+    <section class="gi-quick mt-4 mt-md-5">
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <h2 class="h5 m-0">Быстрые вопросы</h2>
+      </div>
+
+      <div class="gi-hscroll gi-hscroll--mask" id="quick-scroll">
+        {% for group in quick_faqs %}
+          <div class="gi-hscroll__item">
+            {% include "partials/_quick_card.html" with card=group %}
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+{% endblock %}
