@@ -1,0 +1,93 @@
+<style>
+  .w-250 { min-width: 250px; }
+  .qa-group { display: none; }
+</style>
+
+<script>
+(function() {
+  // Константы типов
+  const KIND_HEADING = 'heading';
+  const KIND_TEXT    = 'text';
+  const KIND_IMAGE   = 'image';
+  const KIND_GIF     = 'gif';
+  const KIND_VIDEO   = 'video';
+
+  const formEl = document.getElementById('qa-form');
+  const container = document.getElementById('blocks-container');
+  const addBtn = document.getElementById('add-block-btn');
+  const tmpl = document.getElementById('empty-form-template');
+
+  // Важно: берём TOTAL_FORMS по "name", а не по id (id может отличаться)
+  const mgmtTotal = document.querySelector('input[name="{{ formset.prefix }}-TOTAL_FORMS"]');
+
+  function visibleBlocks() {
+    return Array.from(container.querySelectorAll('.qa-block'))
+      .filter(el => el.style.display !== 'none');
+  }
+
+  function renumberBlocks() {
+    let n = 1;
+    visibleBlocks().forEach(block => {
+      const numEl = block.querySelector('.qa-block-number');
+      if (numEl) numEl.textContent = n++;
+    });
+  }
+
+  function updateGroupVisibility(blockEl) {
+    const kindSel = blockEl.querySelector('select[name$="-kind"]');
+    const kind = kindSel ? kindSel.value : null;
+    const heading = blockEl.querySelector('.qa-heading');
+    const text    = blockEl.querySelector('.qa-text');
+    const media   = blockEl.querySelector('.qa-media');
+
+    [heading, text, media].forEach(g => { if (g) g.style.display = 'none'; });
+
+    if (kind === KIND_HEADING) { if (heading) heading.style.display = 'block'; }
+    else if (kind === KIND_TEXT) { if (text) text.style.display = 'block'; }
+    else if ([KIND_IMAGE, KIND_GIF, KIND_VIDEO].includes(kind)) { if (media) media.style.display = 'block'; }
+  }
+
+  function attachHandlers(blockEl) {
+    const kindSel = blockEl.querySelector('select[name$="-kind"]');
+    if (kindSel) {
+      kindSel.addEventListener('change', () => updateGroupVisibility(blockEl));
+      updateGroupVisibility(blockEl);
+    }
+
+    const removeBtn = blockEl.querySelector('.qa-remove-btn');
+    const delInput = blockEl.querySelector('input[type="checkbox"][name$="-DELETE"]');
+    if (removeBtn && delInput) {
+      removeBtn.addEventListener('click', () => {
+        delInput.checked = true;      // помечаем на удаление
+        blockEl.style.display = 'none';
+        renumberBlocks();             // просто перерисовываем номера
+      });
+    }
+  }
+
+  function addBlock() {
+    const idx = parseInt(mgmtTotal.value, 10);
+    // Клонируем содержимое <template>, заменяя __prefix__ на индекс
+    const html = tmpl.innerHTML.replaceAll('__prefix__', idx);
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = html.trim();
+    const blockEl = wrapper.firstElementChild;
+
+    container.appendChild(blockEl);
+    mgmtTotal.value = String(idx + 1);
+
+    attachHandlers(blockEl);
+    renumberBlocks();
+  }
+
+  // Инициализация: уже отрендеренные формы
+  container.querySelectorAll('.qa-block').forEach(attachHandlers);
+  renumberBlocks();
+
+  // Кнопка добавления
+  if (addBtn) addBtn.addEventListener('click', addBlock);
+
+  // На отправку просто пронумеруем для UI (сервер порядок читает по индексам)
+  formEl.addEventListener('submit', renumberBlocks);
+})();
+</script>

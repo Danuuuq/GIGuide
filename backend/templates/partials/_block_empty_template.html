@@ -1,0 +1,62 @@
+<template id="empty-form-template">
+  <div class="qa-block card mb-3" data-index="__prefix__">
+    <div class="card-body">
+      {{ formset.empty_form.id }}
+      {% if formset.empty_form.DELETE %}{{ formset.empty_form.DELETE }}{% endif %}
+
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="fw-semibold">
+          Блок <span class="qa-block-number"></span>
+        </div>
+        <div class="d-flex gap-2">
+          <div class="w-250">
+            <label class="form-label mb-1">Тип блока</label>
+            {{ formset.empty_form.kind }}
+          </div>
+          <button type="button" class="btn btn-outline-danger btn-sm qa-remove-btn">Удалить</button>
+        </div>
+      </div>
+
+      <div class="qa-group qa-heading">
+        <div class="mb-3">
+          <label class="form-label">Текст заголовка</label>
+          {{ formset.empty_form.heading_text }}
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Уровень</label>
+          {{ formset.empty_form.heading_level }}
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Якорь (необязательно)</label>
+          {{ formset.empty_form.heading_anchor }}
+        </div>
+      </div>
+
+      <div class="qa-group qa-text">
+        <div class="mb-3">
+          <label class="form-label">Текст (Markdown)</label>
+          {{ formset.empty_form.text_md }}
+        </div>
+      </div>
+
+      <div class="qa-group qa-media">
+        <div class="mb-3">
+          <label class="form-label">Файл</label>
+          {{ formset.empty_form.media_file }}
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Ссылка</label>
+          {{ formset.empty_form.media_url }}
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Alt-текст</label>
+          {{ formset.empty_form.alt_text }}
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Подпись</label>
+          {{ formset.empty_form.caption }}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

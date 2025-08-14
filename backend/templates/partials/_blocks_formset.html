@@ -1,0 +1,8 @@
+{{ formset.non_form_errors }}
+{{ formset.management_form }}
+
+<div id="blocks-container">
+  {% for f in formset.forms %}
+    {% include "partials/_block_card.html" with f=f idx=forloop.counter0 n=forloop.counter %}
+  {% endfor %}
+</div>

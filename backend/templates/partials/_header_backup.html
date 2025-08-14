@@ -7,7 +7,7 @@
       {# <img src="{% static 'img/logo.png' %}" alt="Газпром Инвест" height="40"> #}
     </a>
 
-    <!-- Поиск -->
+    <!-- Поиск: видим на >= lg, по центру -->
     <form class="d-none d-lg-flex flex-grow-1 mx-3 gi-search-nav" action="{% url 'guide:search' %}" method="get" role="search">
       <input
         name="q"
@@ -31,31 +31,9 @@
             </a>
           </li>
         {% endfor %}
+      </ul>
 
-        {% if request.user.is_staff %}
-          <li class="nav-item ms-3">
-            {% if request.resolver_match.url_name == "home" %}
-              <a href="{% url 'guide:product_add' %}" class="btn btn-sm btn-success">+ Продукт</a>
-
-            {% elif request.resolver_match.url_name == "product_list" and product %}
-              <a href="{% url 'guide:subcategory_add' product_slug=product.slug %}" class="btn btn-sm btn-success">+ Подкатегория</a>
-
-            {% elif request.resolver_match.url_name == "qa_list" and subcategory and product %}
-              {# на странице списка вопросов подкатегории контекст обычно даёт product и subcategory #}
-              <a href="{% url 'guide:qa_add' product_slug=product.slug sub_slug=subcategory.slug %}"
-                class="btn btn-sm btn-success">+ Вопрос</a>
-
-            {% elif request.resolver_match.url_name == "qa_detail" and qa %}
-              {# на детальной странице вопроса возьмём подкатегорию из qa #}
-              {% with sc=qa.subcategory %}
-                <a href="{% url 'guide:qa_add' product_slug=sc.product.slug sub_slug=sc.slug %}"
-                  class="btn btn-sm btn-success">+ Вопрос</a>
-              {% endwith %}
-            {% endif %}
-          </li>
-        {% endif %}
-
-      <!-- Поиск в коллапсе -->
+      <!-- Поиск в коллапсе: видим на < lg, под ссылками -->
       <form class="d-lg-none w-100 mt-2 gi-search-nav" action="{% url 'guide:search' %}" method="get" role="search">
         <input
           name="q"

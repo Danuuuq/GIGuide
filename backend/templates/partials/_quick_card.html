@@ -4,19 +4,18 @@
       <span class="fw-semibold">{{ card.product_name }}</span>
     </a>
   </div>
-  <div class="card-body py-3">
+  <div class="card-body p-0">
     {% if card.items %}
-      <ul class="list-unstyled mb-0 gi-quick-card__list">
+      <div class="list-group list-group-flush">
         {% for q in card.items %}
-          <li class="mb-2">
-            <a href="{{ q.url }}" class="link-dark text-decoration-none gi-quick-card__link">
-              {{ q.title }}
-            </a>
-          </li>
+          <a href="{{ q.url }}"
+             class="list-group-item list-group-item-action {% if forloop.first %}border-top-0{% endif %}">
+            {{ q.title }}
+          </a>
         {% endfor %}
-      </ul>
+      </div>
     {% else %}
-      <div class="text-muted small">Пока нет вопросов.</div>
+      <div class="text-muted small p-3">Пока нет вопросов.</div>
     {% endif %}
   </div>
 </div>

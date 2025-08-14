@@ -1,0 +1,69 @@
+<div class="qa-block card mb-3" data-index="{{ idx }}">
+  <div class="card-body">
+    {{ f.id }} {# hidden pk, если редактирование #}
+    {% if f.DELETE %}{{ f.DELETE }}{% endif %}
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div class="fw-semibold">
+        Блок <span class="qa-block-number">{{ n }}</span>
+      </div>
+      <div class="d-flex gap-2">
+        <div class="w-250">
+          <label class="form-label mb-1">Тип блока</label>
+          {{ f.kind }}
+          {% for err in f.kind.errors %}<div class="invalid-feedback d-block">{{ err }}</div>{% endfor %}
+        </div>
+        <button type="button" class="btn btn-outline-danger btn-sm qa-remove-btn">Удалить</button>
+      </div>
+    </div>
+
+    <div class="qa-group qa-heading">
+      <div class="mb-3">
+        <label class="form-label">Текст заголовка</label>
+        {{ f.heading_text }}
+        {% for err in f.heading_text.errors %}<div class="invalid-feedback d-block">{{ err }}</div>{% endfor %}
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Уровень</label>
+        {{ f.heading_level }}
+        {% for err in f.heading_level.errors %}<div class="invalid-feedback d-block">{{ err }}</div>{% endfor %}
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Якорь (необязательно)</label>
+        {{ f.heading_anchor }}
+        {% for err in f.heading_anchor.errors %}<div class="invalid-feedback d-block">{{ err }}</div>{% endfor %}
+      </div>
+    </div>
+
+    <div class="qa-group qa-text">
+      <div class="mb-3">
+        <label class="form-label">Текст (Markdown)</label>
+        {{ f.text_md }}
+        {% for err in f.text_md.errors %}<div class="invalid-feedback d-block">{{ err }}</div>{% endfor %}
+      </div>
+    </div>
+
+    <div class="qa-group qa-media">
+      <div class="mb-3">
+        <label class="form-label">Файл</label>
+        {{ f.media_file }}
+        {% for err in f.media_file.errors %}<div class="invalid-feedback d-block">{{ err }}</div>{% endfor %}
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Ссылка</label>
+        {{ f.media_url }}
+        {% for err in f.media_url.errors %}<div class="invalid-feedback d-block">{{ err }}</div>{% endfor %}
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Alt-текст</label>
+        {{ f.alt_text }}
+        {% for err in f.alt_text.errors %}<div class="invalid-feedback d-block">{{ err }}</div>{% endfor %}
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Подпись</label>
+        {{ f.caption }}
+        {% for err in f.caption.errors %}<div class="invalid-feedback d-block">{{ err }}</div>{% endfor %}
+      </div>
+    </div>
+  </div>
+</div>

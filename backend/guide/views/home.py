@@ -13,7 +13,7 @@ class HomeView(BaseView):
         return self.render(
             request,
             title='Главная — Портал ИТ Газпром Инвест',
-            products=products_for_home(limit=8),
-            quick_faqs=quick_faq_groups(max_products=8, per_product=4),
+            products=products_for_home(limit=12),
+            quick_faqs=quick_faq_groups(max_products=12, per_product=4),
             top_links=menu_links_qs(),
         )

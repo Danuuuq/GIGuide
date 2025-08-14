@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Создать вопрос-ответ{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h1 class="h4 mb-4">Создать вопрос-ответ{% if subcategory %} для «{{ subcategory.name }}»{% endif %}</h1>
+
+  <form method="post" class="card p-4 shadow-sm" action="" enctype="multipart/form-data" id="qa-form">
+    {% csrf_token %}
+
+    {% if form.errors %}
+      <div class="alert alert-danger mb-3">Проверьте поля ниже.</div>
+    {% endif %}
+    {{ form.non_field_errors }}
+
+    <div class="mb-3">
+      <label for="{{ form.question.id_for_label }}" class="form-label">Вопрос</label>
+      {{ form.question }}
+      {% for err in form.question.errors %}<div class="invalid-feedback d-block">{{ err }}</div>{% endfor %}
+    </div>
+
+    <div class="mb-4">
+      <label for="{{ form.status.id_for_label }}" class="form-label">Статус</label>
+      {{ form.status }}
+      {% for err in form.status.errors %}<div class="invalid-feedback d-block">{{ err }}</div>{% endfor %}
+    </div>
+
+    <hr class="my-4"/>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="h5 m-0">Блоки ответа</h2>
+      <button type="button" class="btn btn-sm btn-outline-primary" id="add-block-btn">+ Добавить блок</button>
+    </div>
+
+    {% include "partials/_blocks_formset.html" %}
+
+    {% include "partials/_block_empty_template.html" %}
+
+    <div class="mt-4">
+      <button type="submit" class="btn btn-admin-add">Сохранить</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{# скрипты отдельно #}
+{% block extra_js %}
+  {% include "partials/_qa_form_scripts.html" %}
+{% endblock %}

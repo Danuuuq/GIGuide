@@ -94,7 +94,13 @@ class Product(BaseModel):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            base_slug = slugify(self.name)
+            slug = base_slug
+            counter = 1
+            while Subcategory.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
         super().save(*args, **kwargs)
 
 
@@ -120,7 +126,13 @@ class Subcategory(BaseModel):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            base_slug = slugify(self.name)
+            slug = base_slug
+            counter = 1
+            while Subcategory.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
         super().save(*args, **kwargs)
 
     def position_scope_filter(self) -> dict:
@@ -247,10 +259,10 @@ class QABlock(BaseModel):
     class Meta(BaseModel.Meta):
         constraints = [
             # Позиция уникальна в рамках ответа
-            models.UniqueConstraint(
-                fields=['qa', 'position'],
-                name='uq_qablock_qa_position',
-            ),
+            # models.UniqueConstraint(
+            #     fields=['qa', 'position'],
+            #     name='uq_qablock_qa_position',
+            # ),
             # Для текстового блока обязателен text_md
             models.CheckConstraint(
                 name='ck_qablock_text_requires_text',
