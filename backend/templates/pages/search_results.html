@@ -1,0 +1,48 @@
+{# templates/search_results.html #}
+{% extends "base.html" %}
+
+{% block title %}
+  {% if q %}Результаты поиска: {{ q }}{% else %}Поиск{% endif %}
+{% endblock %}
+
+{% block content %}
+  <h1 class="mb-4">Результаты поиска</h1>
+
+  <form method="get" class="row g-2 mb-4">
+    <div class="col-md-8">
+      <input type="text" name="q" value="{{ q|default_if_none:'' }}" class="form-control" placeholder="Что ищем?">
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-primary w-100" type="submit">Найти</button>
+    </div>
+  </form>
+
+  {% if q %}
+    <div class="text-muted mb-3">
+      Запрос: <strong>{{ q }}</strong>. Найдено вопросов: {{ total }}.
+    </div>
+  {% endif %}
+
+  {% if groups %}
+    {% for g in groups %}
+      <h2 class="h5 mt-4">{{ g.subcategory.name }} — {{ g.product.name }}</h2>
+
+      <div class="list-group">
+        {% for qa in g.qas %}
+          <a class="list-group-item list-group-item-action"
+             href="{% url 'guide:qa_detail' product_slug=g.product.slug sub_slug=g.subcategory.slug qa_id=qa.pk %}">
+            {{ qa.question }}
+          </a>
+        {% empty %}
+          <div class="alert alert-info">Вопросов в этой подкатегории пока нет.</div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  {% else %}
+    {% if q and q|length >= 2 %}
+      <div class="alert alert-info">Ничего не найдено.</div>
+    {% elif q %}
+      <div class="alert alert-warning">Введите минимум 2 символа.</div>
+    {% endif %}
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Контакты{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h1 class="mb-4">Контакты технической поддержки</h1>
+
+  <div class="row g-3">
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title mb-3">Техническая поддержка АРМ</h5>
+          <a href="https://portal-gi/services/phone.php?called=33707" class="fs-4 fw-bold text-decoration-none">33707</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title mb-3">Техническая поддержка телефонии и совещаний</h5>
+          <a href="https://portal-gi/services/phone.php?called=33997" class="fs-4 fw-bold text-decoration-none">33997</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title mb-3">Разработать такой же портал</h5>
+          <a href="https://portal-gi/services/phone.php?called=33116" class="fs-4 fw-bold text-decoration-none">33116</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
